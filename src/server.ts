@@ -2,6 +2,7 @@ import express from 'express'
 import { config } from 'dotenv'
 import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { urlencoded } from 'body-parser'
+import { deserialize } from 'v8'
 config()
 const app = express()
 
@@ -18,9 +19,10 @@ const solanaConnection = new Connection(HTTP_ENDPOINT, {
 
 const trackWallet = async () => {
     const wallet = new PublicKey(`FNhPWcjJ98ZVbadvGYktR4soc74pEXw4WhSAmy48tYu7`)
-    const subscriptionId = await solanaConnection.onAccountChange(wallet, 
-        (updatedLog) => {
-            console.log(updatedLog)
+    const subscriptionId = await solanaConnection.onLogs(wallet, 
+        async ({ signature }) => {
+            const sig = await solanaConnection.getParsedTransaction(signature)
+            console.log(sig)
         }
     )
 }
