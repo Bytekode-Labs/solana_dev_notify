@@ -1,0 +1,22 @@
+{
+  "name": "solana-notify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Shlok D. Mange",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.16.3",
+    "@types/node-telegram-bot-api": "^0.61.6",
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon dist/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.61.0"
+  }
+}
