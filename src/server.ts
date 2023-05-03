@@ -22,7 +22,7 @@ const trackWallet = async () => {
     const subscriptionId = await solanaConnection.onLogs(wallet, 
         async ({ signature }) => {
             const sig = await solanaConnection.getParsedTransaction(signature)
-            console.log(sig)
+            console.log(sig?.transaction.message.accountKeys[0])
         }
     )
 }
