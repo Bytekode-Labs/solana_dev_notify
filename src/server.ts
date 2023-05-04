@@ -20,9 +20,12 @@ const solanaConnection = new Connection(HTTP_ENDPOINT, {
 const trackWallet = async () => {
     const wallet = new PublicKey(`FNhPWcjJ98ZVbadvGYktR4soc74pEXw4WhSAmy48tYu7`)
     const subscriptionId = await solanaConnection.onLogs(wallet, 
-        async ({ signature }) => {
+        async ({ signature, logs }) => {
             const sig = await solanaConnection.getParsedTransaction(signature)
-            console.log(sig?.transaction.message.accountKeys[0])
+            let amount = sig?.meta?.preBalances[0]! - sig?.meta?.postBalances[0]!
+            const accountKeys = sig?.transaction.message.accountKeys 
+            let message = `Successfully transferred ${amount} to ${accountKeys![1].pubkey.toString()}`
+            console.log(message)
         }
     )
 }
