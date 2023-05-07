@@ -22,9 +22,11 @@ const trackWallet = async () => {
     const subscriptionId = await solanaConnection.onLogs(wallet, 
         async ({ signature, logs }) => {
             const sig = await solanaConnection.getParsedTransaction(signature)
-            let amount = sig?.meta?.preBalances[0]! - sig?.meta?.postBalances[0]!
+            let amount = (sig?.meta?.preBalances[0]! - sig?.meta?.postBalances[0]!) / LAMPORTS_PER_SOL
+            let asset = `SOL`
             const accountKeys = sig?.transaction.message.accountKeys 
-            let message = `Successfully transferred ${amount} to ${accountKeys![1].pubkey.toString()}`
+            let message = `Successfully transferred ${amount} ${asset} to ${accountKeys![1].pubkey.toString()}`
+            console.log(accountKeys)
             console.log(message)
         }
     )
